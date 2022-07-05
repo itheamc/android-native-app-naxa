@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Naxa Test App</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="entry_image">entry image</string>
+    <string name="entries_fragment_label">Entries</string>
+    <string name="entry_fragment_label">Entry</string>
+</resources>
