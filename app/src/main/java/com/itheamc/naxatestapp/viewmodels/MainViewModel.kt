@@ -23,7 +23,7 @@ class MainViewModel(
 
 
     /**
-     * Flow for paging entries data
+     * Paging data flow
      */
     val entries = Pager(
         PagingConfig(
@@ -35,9 +35,5 @@ class MainViewModel(
         EntryPagingSource(mainRepository.entryDao)
     }.flow.cachedIn(viewModelScope)
 
-    /**
-     * Variable to store the entry that user clicked
-     */
-    var entry: Entry? = null
 
 }

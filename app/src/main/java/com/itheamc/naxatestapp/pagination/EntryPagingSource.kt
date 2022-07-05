@@ -26,7 +26,8 @@ class EntryPagingSource(
         return try {
             val entities = entryDao.entries(params.loadSize, page * params.loadSize)
 
-            if (page != 0) delay(5000)
+            // For simulating the loading
+            if (page != 0) delay(2500)
 
             LoadResult.Page(
                 data = entities,
