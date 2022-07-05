@@ -8,33 +8,67 @@
     android:layout_marginStart="10dp"
     android:layout_marginTop="5dp"
     android:layout_marginEnd="10dp"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="15dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/entryImage"
+        <TextView
+            android:id="@+id/apiTextView"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:contentDescription="@string/entry_image"
-            tools:ignore="ImageContrastCheck"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text=""
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/apiText"
-            android:layout_width="wrap_content"
+            android:id="@+id/descTextVIew"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="" />
 
         <TextView
-            android:id="@+id/apiDesc"
-            android:layout_width="wrap_content"
+            android:id="@+id/authTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/httpsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/corsTextVvew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/categoryTextVvew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

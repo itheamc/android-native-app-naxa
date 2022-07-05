@@ -7,9 +7,11 @@ import com.itheamc.naxatestapp.models.Entry
 interface EntryDao {
     /**
      * To get all the entries
+     * [limit] -> size of entries to be fetched
+     * [offset] -> offset is the point after which rows not more than limit is fetched
      */
     @Query("SELECT * FROM entries ORDER BY id ASC LIMIT :limit OFFSET :offset")
-    fun entries(limit: Int, offset: Int): List<Entry>
+    suspend fun entries(limit: Int, offset: Int): List<Entry>
 
     /**
      * Function to insert [entry] to our database
@@ -28,4 +30,16 @@ interface EntryDao {
      */
     @Update
     suspend fun updateEntry(entry: Entry)
+
+    /**
+     * Function to find the entry with given [link] from our database
+     */
+    @Query("SELECT * FROM entries WHERE link LIKE :link LIMIT 1")
+    suspend fun findByLink(link: String): Entry?
+
+    /**
+     * Function to count the entries in our database
+     */
+    @Query("SELECT COUNT(*) FROM entries")
+    suspend fun count(): Long
 }

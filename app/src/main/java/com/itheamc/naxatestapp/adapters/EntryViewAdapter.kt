@@ -8,15 +8,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.itheamc.naxatestapp.databinding.EntryViewBinding
 import com.itheamc.naxatestapp.models.Entry
 
-class EntryViewAdapter : PagingDataAdapter<Entry, EntryViewAdapter.MainViewHolder>(DIFF_CALLBACK) {
+private const val TAG = "EntryViewAdapter"
+
+class EntryViewAdapter(val clickListener: (entry: Entry?) -> Unit) :
+    PagingDataAdapter<Entry, EntryViewAdapter.MainViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Entry>() {
             override fun areItemsTheSame(oldItem: Entry, newItem: Entry): Boolean =
-                oldItem.id == newItem.id
+                oldItem == newItem
 
             override fun areContentsTheSame(oldItem: Entry, newItem: Entry): Boolean =
-                oldItem == newItem
+                oldItem.id == newItem.id &&
+                        oldItem.api == newItem.api &&
+                        oldItem.desc == newItem.desc &&
+                        oldItem.link == newItem.link &&
+                        oldItem.category == newItem.category
         }
     }
 
@@ -33,8 +40,13 @@ class EntryViewAdapter : PagingDataAdapter<Entry, EntryViewAdapter.MainViewHolde
         val item = getItem(position)
 
         holder.binding.apply {
-            apiText.text = item?.api ?: "Hello"
-            apiDesc.text = item?.desc ?: "n/a"
+            apiTextView.text = "API :  ${item?.api}"
+            descTextVIew.text = "Descrition :  ${item?.desc}"
+            authTextView.text = "Auth :  ${item?.auth}"
+            httpsTextView.text = "Https :  ${item?.https}"
+            corsTextVvew.text = "Cors :  ${item?.cors}"
+            categoryTextVvew.text = "Category :  ${item?.category}"
+            entryCard.setOnClickListener { clickListener(item) }
         }
     }
 }

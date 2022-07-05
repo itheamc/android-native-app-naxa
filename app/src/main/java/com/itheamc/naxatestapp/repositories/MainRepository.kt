@@ -13,9 +13,10 @@ class MainRepository(
         entryService.getEntries();
     }
 
-    //    val entries: List<Entry> = entryDao.entries()
 
-
+    /**
+     * For database operation
+     */
     @WorkerThread
     suspend fun insertEntry(entry: Entry) {
         entryDao.insertEntry(entry)
@@ -29,5 +30,31 @@ class MainRepository(
     @WorkerThread
     suspend fun updateEntry(entry: Entry) {
         entryDao.updateEntry(entry)
+    }
+
+    @WorkerThread
+    suspend fun findByLink(link: String): Entry? {
+        return entryDao.findByLink(link)
+    }
+
+
+    /**
+     * For Api call
+     */
+    suspend fun fetchEntries() {
+
+        val response = entryService.getEntries()
+
+        if (response.isSuccessful && response.body() != null) {
+            response.body()?.let {
+                if (entryDao.count() < it.count) {
+                    it.entries.forEach { entry ->
+                        if (findByLink(entry.link ?: "") == null) {
+                            insertEntry(entry)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
