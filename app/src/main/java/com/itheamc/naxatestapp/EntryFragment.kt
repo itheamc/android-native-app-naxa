@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.itheamc.naxatestapp.databinding.FragmentEntryBinding
 
 
@@ -38,6 +36,12 @@ class EntryFragment : Fragment() {
          */
         binding.webView.webViewClient = AWebViewClient()
 
+
+        /**
+         * Getting entry link url from the arguments that we have passed from EntriesFragment
+         * with key ---> 'link'
+         * and loading that url with WebView
+         */
         arguments?.let {
             val link = it.get("link")
 
@@ -48,6 +52,9 @@ class EntryFragment : Fragment() {
     }
 
 
+    /**
+     * Setting binding to null whenever view was destroyed
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -32,8 +32,14 @@ class MainViewModel(
             initialLoadSize = 20
         ),
     ) {
-        EntryPagingSource(mainRepository.entryDao)
+        EntryPagingSource(mainRepository)
     }.flow.cachedIn(viewModelScope)
+
+
+    /**
+     * Error flow
+     */
+    val error = mainRepository.error
 
 
 }

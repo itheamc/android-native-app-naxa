@@ -4,13 +4,14 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.itheamc.naxatestapp.models.Entry
+import com.itheamc.naxatestapp.repositories.MainRepository
 import com.itheamc.naxatestapp.room_db.EntryDao
 import kotlinx.coroutines.delay
 
 private const val TAG = "EntryPagingSource"
 
 class EntryPagingSource(
-    private val entryDao: EntryDao
+    private val repository: MainRepository
 ) : PagingSource<Int, Entry>() {
 
     override fun getRefreshKey(state: PagingState<Int, Entry>): Int? {
@@ -24,7 +25,7 @@ class EntryPagingSource(
         val page = params.key ?: 0
 
         return try {
-            val entities = entryDao.entries(params.loadSize, page * params.loadSize)
+            val entities = repository.entryDao.entries(params.loadSize, page * params.loadSize)
 
             // For simulating the loading
             if (page != 0) delay(2500)
@@ -36,6 +37,7 @@ class EntryPagingSource(
             )
         } catch (e: Exception) {
             Log.d(TAG, "load: ${e.message}")
+            repository.error.emit(e.message)
             LoadResult.Error(e)
         }
     }

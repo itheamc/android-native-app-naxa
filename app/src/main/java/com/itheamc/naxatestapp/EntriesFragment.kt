@@ -1,13 +1,12 @@
 package com.itheamc.naxatestapp
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.itheamc.naxatestapp.adapters.EntryViewAdapter
@@ -16,8 +15,6 @@ import com.itheamc.naxatestapp.pagination.EntryLoadStateAdapter
 import com.itheamc.naxatestapp.viewmodels.MainViewModel
 import com.itheamc.naxatestapp.viewmodels.MainViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import okhttp3.internal.notify
 
 private const val TAG = "EntriesFragment"
 
@@ -42,12 +39,12 @@ class EntriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         /**
-         * Initializing the main repository
+         * Getting the main repository instance from the application
          */
         val repository = (requireActivity().application as NaxaApplication).mainRepository
 
         /**
-         * Initializing View model
+         * Initializing View model with repository instance
          */
         val viewModel: MainViewModel by viewModels(factoryProducer = {
             MainViewModelFactory(
@@ -56,7 +53,7 @@ class EntriesFragment : Fragment() {
         })
 
         /**
-         * Initializing EntryViewAdapter
+         * Initializing EntryViewAdapter and handling onClick callback
          */
         val entriesAdapter = EntryViewAdapter(
             clickListener = {
@@ -74,14 +71,14 @@ class EntriesFragment : Fragment() {
         )
 
         /**
-         * Setting entriesAdapter as a entryRecyclerView adapter
+         * Setting entriesAdapter to entryRecyclerView adapter
          */
         binding.entryRecyclerView.adapter = entriesAdapter.withLoadStateFooter(
             EntryLoadStateAdapter()
         )
 
         /**
-         * Listening the flow data and passing to the entryAdapter to show in the recyclerview
+         * Listening the data flow and passing it to the entryAdapter so as to show on recyclerview
          */
         lifecycleScope.launchWhenCreated {
             viewModel.entries.collectLatest {
@@ -89,8 +86,23 @@ class EntriesFragment : Fragment() {
             }
         }
 
+
+        /**
+         * Listening the error that flow in case any error or exceptions occurs
+         */
+        lifecycleScope.launchWhenCreated {
+            viewModel.error.collectLatest {
+                it?.let { err ->
+                    Toast.makeText(context, err, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
     }
 
+    /**
+     * Setting binding to null whenever view was destroyed
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
