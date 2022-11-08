@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>Nepal Waste Map (Beta) Appcast</title>
+        <item>
+            <title>Version v2022.0.16</title>
+            <description>Minor updates and improvements.</description>
+            <pubDate>Mon, 07 Nov 2022 12:00:00 +0000</pubDate>
+            <enclosure url="https://play.google.com/store/apps/details?id=demo.nepalwastemap.org" sparkle:version="v2022.0.16" sparkle:os="android" />
+        </item>
+    </channel>
+</rss>
